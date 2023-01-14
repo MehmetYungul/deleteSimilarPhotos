@@ -1,0 +1,28 @@
+import os
+from PIL import Image
+
+def find_similar_images(folder_path):
+    # Get a list of all files in the folder
+    files = os.listdir(folder_path)
+    image_paths = [os.path.join(folder_path, f) for f in files if f.endswith(".jpg") or f.endswith(".png")]
+
+    # Create a dictionary to store image hashes
+    image_hashes = {}
+
+    # Iterate over all image paths
+    for image_path in image_paths:
+        # Open the image and calculate its hash
+        with Image.open(image_path) as im:
+            hash = imagehash.dhash(im)
+            # If the hash already exists in the dictionary, this is a duplicate image
+            if hash in image_hashes:
+                # Print the duplicate image file path
+                print(f"Duplicate image found: {image_path}")
+                # Remove the duplicate image file
+                os.remove(image_path)
+            else:
+                # Add the hash to the dictionary
+                image_hashes[hash] = image_path
+
+# Usage example
+find_similar_images("path/to/folder")
